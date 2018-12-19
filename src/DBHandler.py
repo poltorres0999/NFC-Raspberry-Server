@@ -12,11 +12,19 @@ class DBHandler:
         except sqlite3.Error as err:
             print("Unable to connect to db {}, error: {}".format(db_name, err))
 
-    def check_rfid_tag(self, tag):
+    def check_RFID_tag(self, tag):
         tag = (tag,)
         self.cursor = self.connection.cursor()
         query = "SELECT * FROM tags WHERE Card=?"
         result = self.cursor.execute(query, tag).fetchone()
+        self.cursor.close()
+        return result
+
+    def check_master_key (self, key_uid):
+        master_key = (key_uid,)
+        self.cursor = self.connection.cursor()
+        query = "SELECT * FROM tags WHERE Card=?"
+        result = self.cursor.execute(query, master_key).fetchone()
         self.cursor.close()
         return result
 
