@@ -21,7 +21,7 @@ class NFCServer:
         self.server_started = False
         self.master_state = False
         self.db =  DBHandler(db_name)
-        self.master_timeout = 5
+        self.master_timeout = 10
         self.master_time = 0
 
     def start_server(self):
@@ -68,10 +68,12 @@ class NFCServer:
 
                 if not self.db.check_master_key(data):
                     self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [0]), address)
+                    print("Master key not found".format(data))
                 else:
                     self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [1]), address)
                     self.master_time = time.time()
                     self.master_state = True
+                    print("Master key active".format(data))
 
             except sqlite3.Error as err:
                 self.self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [0]), address)
@@ -101,9 +103,11 @@ class NFCServer:
                     if not self.db.check_RFID_tag(data):
                         self.db.store_rfid_tag(data)
                         self.sock.sendto(self.create_package(self.ADD_TAG, 1, [1]), address)
+                        self.master_state = False
                         print("Tag: {} already exists".format(data))
                     else:
                         self.self.sock.sendto(self.create_package(self.ADD_TAG, 1, [1]), address)
+                        self.master_state = False
                         print("Tag: {} added successfully".format(data))
 
                 except sqlite3.Error as err:
@@ -125,6 +129,7 @@ class NFCServer:
                     else:
                         self.db.delte_RFID_tag(data)
                         self.self.sock.sendto(self.create_package(self.DELETE_TAG, 1, [1]), address)
+                        self.master_state = False
                         print("Tag: {} deleted successfully".format(data))
 
                 except sqlite3.Error as err:
