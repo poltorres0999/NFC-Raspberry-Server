@@ -9,6 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/NFC_Raspberry_Server$NFCClient.coverage" NAME="NFCClient Coverage Results" MODIFIED="1545320105862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NFCClient" />
     <SUITE FILE_PATH="coverage/NFC_Raspberry_Server$TestDB.coverage" NAME="TestDB Coverage Results" MODIFIED="1545130359871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Test" />
   </component>
   <component name="DatabaseView">
@@ -31,32 +32,32 @@
         <counts>
           <entry key="project.closed" value="1" />
           <entry key="project.open.time.33" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.6" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="DATABASE/ed37cbf3-916d-4304-96d2-98c36acbe43a" value="1" />
-          <entry key="py" value="8" />
+          <entry key="py" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="8" />
+          <entry key="Python" value="9" />
           <entry key="UML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="37" />
-          <entry key="py" value="4890" />
+          <entry key="py" value="6824" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="37" />
-          <entry key="Python" value="4890" />
+          <entry key="Python" value="6824" />
         </counts>
       </usages-collector>
     </session>
@@ -68,14 +69,28 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NFCServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="105" column="49" selection-start-line="105" selection-start-column="49" selection-end-line="105" selection-end-column="49" />
+            <state relative-caret-position="136">
+              <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1545241480588" expanded="true" signature="192:197" ph="..." />
+                <marker date="1545320305521" expanded="true" signature="192:197" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NFCClient/NFCClient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="165" column="49" selection-start-line="165" selection-start-column="49" selection-end-line="165" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+                <marker date="1545324459362" expanded="true" signature="241:242" ph="..." />
+                <marker date="1545324459362" expanded="true" signature="2678:2688" ph="..." />
               </folding>
             </state>
           </provider>
@@ -90,19 +105,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DBHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="36" />
-              <folding>
-                <marker date="1545237879732" expanded="true" signature="33:3618" ph="..." />
-                <marker date="1545237879732" expanded="true" signature="942:948" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -111,6 +113,11 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>create</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -125,7 +132,9 @@
         <option value="$PROJECT_DIR$/DBHandler.py" />
         <option value="$PROJECT_DIR$/Test/TestDB.py" />
         <option value="$PROJECT_DIR$/src/DBHandler.py" />
+        <option value="$PROJECT_DIR$/src/NFCClient.py" />
         <option value="$PROJECT_DIR$/src/NFCServer.py" />
+        <option value="$PROJECT_DIR$/NFCClient/NFCClient.py" />
       </list>
     </option>
   </component>
@@ -136,8 +145,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
     <option name="width" value="1750" />
     <option name="height" value="970" />
   </component>
@@ -154,6 +163,11 @@
             <path>
               <item name="NFC-Raspberry-Server" type="b2602c69:ProjectViewProjectNode" />
               <item name="NFC-Raspberry-Server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NFC-Raspberry-Server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NFC-Raspberry-Server" type="462c0819:PsiDirectoryNode" />
+              <item name="NFCClient" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="NFC-Raspberry-Server" type="b2602c69:ProjectViewProjectNode" />
@@ -178,6 +192,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\polto\Documents\Github\NFC-Raspberry-Server\NFCClient" />
       <recent name="C:\Users\polto\Documents\Github\NFC-Raspberry-Server\src" />
     </key>
   </component>
@@ -193,7 +208,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.NFCClient">
+    <configuration name="NFCClient" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NFC-Raspberry-Server" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NFCClient" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NFCClient/NFCClient.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestDB" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="NFC-Raspberry-Server" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -216,8 +253,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.TestDB" />
+      <item itemvalue="Python.NFCClient" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.NFCClient" />
         <item itemvalue="Python.TestDB" />
       </list>
     </recent_temporary>
@@ -239,7 +281,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22818792" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20872483" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -259,7 +301,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32985073" />
-      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.110067114" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.09865772" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,11 +325,22 @@
             <Category>Key columns</Category>
             <Category>Columns</Category>
           </Categories>
+          <SCOPE>All</SCOPE>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/StartServer.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DBHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="88" column="38" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="38" />
+          <folding>
+            <marker date="1545237879732" expanded="true" signature="942:948" ph="..." />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Test/TestDB.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -296,24 +349,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DBHandler.py">
+    <entry file="file://$PROJECT_DIR$/src/NFCServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="36" />
+        <state relative-caret-position="136">
+          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding>
-            <marker date="1545237879732" expanded="true" signature="33:3618" ph="..." />
-            <marker date="1545237879732" expanded="true" signature="942:948" ph="..." />
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1545320305521" expanded="true" signature="192:197" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NFCServer.py">
+    <entry file="file://$PROJECT_DIR$/NFCClient/NFCClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="105" column="49" selection-start-line="105" selection-start-column="49" selection-end-line="105" selection-end-column="49" />
+        <state relative-caret-position="239">
+          <caret line="165" column="49" selection-start-line="165" selection-start-column="49" selection-end-line="165" selection-end-column="49" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1545241480588" expanded="true" signature="192:197" ph="..." />
+            <element signature="e#0#23#0" expanded="true" />
+            <marker date="1545324459362" expanded="true" signature="241:242" ph="..." />
+            <marker date="1545324459362" expanded="true" signature="2678:2688" ph="..." />
           </folding>
         </state>
       </provider>
