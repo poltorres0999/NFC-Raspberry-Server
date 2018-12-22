@@ -2,16 +2,21 @@ import sqlite3
 import struct
 import socket
 import time;
+import datetime
 
 from src.DBHandler import DBHandler
 
 
 class NFCServer:
 
+    # RFID package ID's
     AUTH_REQ = 101
     MASTER_REQ = 102
     ADD_TAG = 103
     DELETE_TAG = 104
+
+    # Response
+    RESPONSE_SIZE = 2
 
     def __init__(self, ip_address, port, db_name):
         self.ip_address = ip_address
@@ -20,7 +25,7 @@ class NFCServer:
         self.sock = ""
         self.server_started = False
         self.master_state = False
-        self.db =  DBHandler(db_name)
+        self.db = DBHandler(db_name)
         self.master_timeout = 10
         self.master_time = 0
 
@@ -57,41 +62,61 @@ class NFCServer:
                 # '>' for BigEndian encoding , change to < for LittleEndian, or @ for native.
                 code = struct.unpack('>h', p[:2])[0]
                 size = struct.unpack('>h', p[2:4])[0]
-                data = struct.unpack('>' + 'h' * int(size / 2), p[4:size + 4]) # Replace for get_tag when implemented
+                data = struct.unpack('>' + 'h' * int(size / 2), p[4:size + 4])
 
                 print("Code: {0} Size: {1} Data: {2} Address: {3}".format(code, size, data, address))
 
-    def evaluate_package (self, code, data, address):
+                self.evaluate_package(code, data, address)
+
+    def evaluate_package(self, code, data, address):
+
+        tag = self.tag_num_to_str(data)
 
         if code == self.MASTER_REQ:
-            try:
 
-                if not self.db.check_master_key(data):
-                    self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [0]), address)
-                    print("Master key not found".format(data))
+            try:
+                if not self.db.check_master_key(tag):
+                    self.sock.sendto(self.create_package(self.MASTER_REQ, self.RESPONSE_SIZE, [0]), address)
+
+                    date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+                    self.db.store_log(tag, date, 0)
+
+                    print("Master key {} not found".format(tag))
                 else:
-                    self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [1]), address)
+                    self.sock.sendto(self.create_package(self.MASTER_REQ, self.RESPONSE_SIZE, [1]), address)
                     self.master_time = time.time()
                     self.master_state = True
-                    print("Master key active".format(data))
+
+                    date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+                    self.db.store_log(tag, date, 0)
+
+                    print("Master key {} active".format(tag))
 
             except sqlite3.Error as err:
-                self.self.sock.sendto(self.create_package(self.MASTER_REQ, 1, [0]), address)
+                self.self.sock.sendto(self.create_package(self.MASTER_REQ, self.RESPONSE_SIZE, [0]), address)
                 print("Data base error: {}".format(err))
 
         if code == self.AUTH_REQ:
 
             try:
+                if not self.db.check_RFID_tag(tag):
+                    self.sock.sendto(self.create_package(self.AUTH_REQ, self.RESPONSE_SIZE, [0]), address)
 
-                if not self.db.check_RFID_tag(data):
-                    self.sock.sendto(self.create_package(self.AUTH_REQ, 1, [0]), address)
-                    print("Key {} not authorized".format(data))
+                    date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+                    self.db.store_log(tag, date, 0)
+
+                    print("Key {} not authorized".format(tag))
+
                 else:
-                    self.sock.sendto(self.create_package(self.AUTH_REQ, 1, [1]), address)
-                    print("Key {} authorized".format(data))
+                    self.sock.sendto(self.create_package(self.AUTH_REQ, self.RESPONSE_SIZE, [1]), address)
+
+                    date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+                    self.db.store_log(tag, date, 0)
+
+                    print("Key {} authorized".format(tag))
 
             except sqlite3.Error as err:
-                self.self.sock.sendto(self.create_package(self.AUTH_REQ, 1, [0]), address)
+                self.self.sock.sendto(self.create_package(self.AUTH_REQ, self.RESPONSE_SIZE, [0]), address)
                 print("Data base error: {}".format(err))
 
         if code == self.ADD_TAG:
@@ -100,21 +125,21 @@ class NFCServer:
 
                 try:
 
-                    if not self.db.check_RFID_tag(data):
-                        self.db.store_rfid_tag(data)
-                        self.sock.sendto(self.create_package(self.ADD_TAG, 1, [1]), address)
+                    if not self.db.check_RFID_tag(tag):
+                        self.db.store_rfid_tag(tag)
+                        self.sock.sendto(self.create_package(self.ADD_TAG, self.RESPONSE_SIZE, [1]), address)
                         self.master_state = False
-                        print("Tag: {} already exists".format(data))
+                        print("Tag: {} already exists".format(tag))
                     else:
-                        self.self.sock.sendto(self.create_package(self.ADD_TAG, 1, [1]), address)
+                        self.self.sock.sendto(self.create_package(self.ADD_TAG, self.RESPONSE_SIZE, [1]), address)
                         self.master_state = False
-                        print("Tag: {} added successfully".format(data))
+                        print("Tag: {} added successfully".format(tag))
 
                 except sqlite3.Error as err:
-                    self.self.sock.sendto(self.create_package(self.ADD_TAG, 1, [0]), address)
+                    self.self.sock.sendto(self.create_package(self.ADD_TAG, self.RESPONSE_SIZE, [0]), address)
                     print("Data base error: {}".format(err))
             else:
-                self.self.sock.sendto(self.create_package(self.ADD_TAG, 1, [0]), address)
+                self.self.sock.sendto(self.create_package(self.ADD_TAG, self.RESPONSE_SIZE, [0]), address)
                 print("Error adding tag: Master authorization needed")
 
         if code == self.DELETE_TAG:
@@ -123,25 +148,23 @@ class NFCServer:
 
                 try:
 
-                    if not self.db.check_RFID_tag(data):
-                        self.sock.sendto(self.create_package(self.DELETE_TAG, 1, [0]), address)
-                        print("Delete error: Tag {} not found".format(data))
+                    if not self.db.check_RFID_tag(tag):
+                        self.sock.sendto(self.create_package(self.DELETE_TAG, self.RESPONSE_SIZE, [0]), address)
+                        print("Delete error: Tag {} not found".format(tag))
                     else:
-                        self.db.delte_RFID_tag(data)
-                        self.self.sock.sendto(self.create_package(self.DELETE_TAG, 1, [1]), address)
+                        self.db.delte_RFID_tag(tag)
+                        self.self.sock.sendto(self.create_package(self.DELETE_TAG, self.RESPONSE_SIZE, [1]), address)
                         self.master_state = False
-                        print("Tag: {} deleted successfully".format(data))
+                        print("Tag: {} deleted successfully".format(tag))
 
                 except sqlite3.Error as err:
-                    self.self.sock.sendto(self.create_package(self.DELETE_TAG, 1, [0]), address)
+                    self.self.sock.sendto(self.create_package(self.DELETE_TAG, self.RESPONSE_SIZE, [0]), address)
                     print("Data base error: {}".format(err))
             else:
-                self.self.sock.sendto(self.create_package(self.DELETE_TAG, 1, [0]), address)
+                self.self.sock.sendto(self.create_package(self.DELETE_TAG, self.RESPONSE_SIZE, [0]), address)
                 print("Error deleting tag: Master authorization needed")
 
-    def get_tag (self, data):
-        pass
-
+    @staticmethod
     def create_package(self, code, size, data):
         # '>' for BigEndian encoding , change to < for LittleEndian, or @ for native.
         code = struct.pack('>h', code)
@@ -156,3 +179,12 @@ class NFCServer:
     def check_master_timeout(self):
         if (time.time() - self.master_time) > self.master_timeout:
             self.master_state = False
+
+    def tag_num_to_str (self, tag):
+        tag_str = ""
+        for n in range(len(tag)):
+            tag_str += str(tag[n]) + ","
+        tag_str = tag_str[:-1]
+
+        return tag_str
+

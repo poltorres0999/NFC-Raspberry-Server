@@ -33,12 +33,32 @@ class DBHandler:
         self.cursor = self.connection.cursor()
         query = "INSERT INTO tags VALUES (?)"
         result = self.cursor.execute(query, tag).fetchone()
+        self.connection.commit()
         self.cursor.close()
+
+    def store_master_key(self, master_key):
+        master_key = (master_key,)
+        self.cursor = self.connection.cursor()
+        query = "INSERT INTO tags VALUES (?)"
+        result = self.cursor.execute(query, master_key).fetchone()
+        self.connection.commit()
+        self.cursor.close()
+
+    def store_log(self, tag, date, state):
+
+        tag = (tag,)
+        self.cursor = self.connection.cursor()
+        query = "INSERT INTO tags VALUES (?,?,?)"
+        result = self.cursor.execute(query, tag, date, state).fetchone()
+        self.connection.commit()
+        self.cursor.close()
+
 
     def delte_RFID_tag(self, tag):
         tag = (tag,)
         self.cursor = self.connection.cursor()
         query = "DELETE FROM tags WHERE Card=?"
+        self.connection.commit()
         self.cursor.close()
 
     def check_table_exists(self, table_name):
@@ -77,21 +97,17 @@ class DBHandler:
 
         if not self.check_table_exists("tags"):
             self.cursor = self.connection.cursor()
-            tags = [("123789",), ("123789",), ("123789",)]
+            tags = [("85,14,141,205,27",), ("32,206,70,46,135",)]
             self.cursor.execute(create_key)
             self.cursor.executemany('INSERT INTO tags VALUES (?)', tags)
 
         if not self.check_table_exists("log"):
             self.cursor = self.connection.cursor()
-            logs = [("001", "123789", "2006-03-28", "1"),
-                    ("002", "1456789", "2006-03-28", "0"),
-                    ("003", "123459", "2006-03-28", "1")]
             self.cursor.execute(create_log)
-            self.cursor.executemany('INSERT INTO log VALUES (?,?,?,?)', logs)
 
         if not self.check_table_exists("masterKey"):
             self.cursor = self.connection.cursor()
-            master = ("123456M",)
+            master = ("241,200,85,211,191",)
             self.cursor.execute(create_master_key)
             self.cursor.execute('INSERT INTO masterKey VALUES (?)', master)
 
