@@ -23,7 +23,7 @@ class DBHandler:
     def check_master_key (self, key_uid):
         master_key = (key_uid,)
         self.cursor = self.connection.cursor()
-        query = "SELECT * FROM tags WHERE Card=?"
+        query = "SELECT * FROM masterKey WHERE Card=?"
         result = self.cursor.execute(query, master_key).fetchone()
         self.cursor.close()
         return result
@@ -46,10 +46,10 @@ class DBHandler:
 
     def store_log(self, tag, date, state):
 
-        tag = (tag,)
+        args = (tag, date, state)
         self.cursor = self.connection.cursor()
-        query = "INSERT INTO tags VALUES (?,?,?)"
-        result = self.cursor.execute(query, tag, date, state).fetchone()
+        query = "INSERT INTO log VALUES (?,?,?)"
+        self.cursor.execute(query, args).fetchone()
         self.connection.commit()
         self.cursor.close()
 
@@ -58,6 +58,7 @@ class DBHandler:
         tag = (tag,)
         self.cursor = self.connection.cursor()
         query = "DELETE FROM tags WHERE Card=?"
+        self.cursor.execute(query, tag)
         self.connection.commit()
         self.cursor.close()
 
@@ -92,7 +93,7 @@ class DBHandler:
     def init_db(self):
 
         create_key = "CREATE TABLE IF NOT EXISTS tags (Card TEXT)"
-        create_log = "CREATE TABLE IF NOT EXISTS log (ID INTEGER PRIMARY KEY, Card TEXT, Date TEXT,  authorized INTEGER DEFAULT 0)"
+        create_log = "CREATE TABLE IF NOT EXISTS log (Card TEXT, Date TEXT,  authorized INTEGER DEFAULT 0)"
         create_master_key = "CREATE TABLE IF NOT EXISTS masterKey (Card TEXT)"
 
         if not self.check_table_exists("tags"):
